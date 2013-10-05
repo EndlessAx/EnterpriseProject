@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="../view/css/main.css"/>
+	<script type="text/javascript" src="../view/js/facebook.js" ></script> 
+	<title>Register with Perception</title>
+</head>
+<body>
+	
+<form method='POST' action='../controller/control.php'>	
+	<div class="main_box" style='margin-top:50px'>			
+		<a href='../controller/control.php'>Back to Perception</a>						
+		<p class="color_dark" id="course_title">
+			<b class="color_alt">Rate</b> courses. <b class="color_alt">Review</b> courses. <br/>								
+			<b class="color_alt">Track</b> your progress - with <b>Interests</b> and <b>Completions</b><br/>		
+			<b class="color_alt">Perceive</b> more with personalised search
+		</p>
+		<p id="results_title">
+			<span>
+				<b class="color_alt">See</b> more.
+				<b class="color_alt">Do</b> more.  
+				<b class="color_alt">Register</b> with Perception today.
+			</span>							
+		</p>
+		
+		<!-- Display errors if they exist -->	
+		<?php if (isset($input_errors) && strlen($input_errors) > 0) { ?>
+			<span class='color_red'><b> <?= $input_errors ?></b></span>
+		<?php } ?>
+		
+		<p>		
+			<table id='register_table'>
+				<tr>
+					<td align='right'><b>Name</b></td>
+					<td align='left'><input type='text' name="user_name" /></td>					
+				</tr>
+				<tr>
+					<td align='right'><b>Email</b></td>
+					<td align='left'><input type='text' name='user_email' /></td>					
+				</tr>
+				<tr>
+					<td align='right'><b>Password</b></td>
+					<td align='left'><input type='password' name="user_password" /></td>					
+				</tr>
+				<tr>
+					<td align='right'><b>Confirm password</b></td>
+					<td align='left'><input type='password' name="user_confirmpassword"/></td>					
+				</tr>
+				<tr>
+					<td><br/></td>
+				</tr>
+				<tr>
+					<td align='center' colspan='3'>
+						<input 	class='button_link' type='submit'
+								name='c_register_normal'  
+								value='     Register     '/>						
+					</td>
+				</tr>
+			</table>
+		</p>		
+		<br/>
+		<p id='course_title'>
+			Alternatively, register with 
+			<span style='background-color:#3B5998'>
+				<span style='color:#FFFFFF'><b>&nbsp;Facebook&nbsp;</b></span>	
+			</span>
+		</p>				
+		<div id="fb-root"></div>	  
+		<fb:login-button show-faces='true' width="200" max-rows="1"></fb:login-button>			
+	</div>
+</form>
+</body>
+</html>
