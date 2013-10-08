@@ -1,5 +1,5 @@
 <?php
 
-   header('Location: ./perception/WebContent/controller/control.php');
+   header('Location: WebContent/controller/control.php');
 
 ?>
