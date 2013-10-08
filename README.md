@@ -5,7 +5,12 @@ Server-side modifications to Perception
 
 This is an overview of the structure of the Perception web application
 
-1. Folder Structure
+    a. Folder structure
+    b. Application flow
+    c. "control.php" explained
+
+
+a. Folder Structure
 
 /WebContent
     /controller
@@ -28,7 +33,7 @@ This is an overview of the structure of the Perception web application
 "/facebook-sdk" contains the facebook APIs required to enable facebook login
 
 
-2. Application flow
+b. Application flow
 
 Perception uses a "Model-View-Controller" structure.
   1. User input generated in the "view" is sent to the "controller"
@@ -49,7 +54,7 @@ This is applied in Perception through the use of the "control.php" file, found a
   3. The application logic modules update the "view" by changing or updating the HTML page displayed.
   
 
-3. "control.php" explained
+c. "control.php" explained
   "control.php" accepts the HTTP request from the displayed webpage and parses its query string.
   
   It uses the "user_name" and "user_pasword" cookies to determine user login status.
