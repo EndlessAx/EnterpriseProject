@@ -19,7 +19,6 @@ a. Folder Structure
     
 /facebook-sdk
 
-
 "/WebContent" contains the core of the web application
   "/controller" contains the modules relating to the application layer
     User Module, Search Module and Course Management System modules are located here.
@@ -31,6 +30,8 @@ a. Folder Structure
     HTML, CSS and JS files go here.
 
 "/facebook-sdk" contains the facebook APIs required to enable facebook login
+
+
 
 
 b. Application flow
@@ -54,7 +55,10 @@ This is applied in Perception through the use of the "control.php" file, found a
   3. The application logic modules update the "view" by changing or updating the HTML page displayed.
   
 
+
+
 c. "control.php" explained
+
   "control.php" accepts the HTTP request from the displayed webpage and parses its query string.
   
   It uses the "user_name" and "user_pasword" cookies to determine user login status.
