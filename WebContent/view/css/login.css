@@ -1,0 +1,49 @@
+@CHARSET "UTF-8";
+
+#login_box
+{
+	
+	position:absolute;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	margin:auto;
+	width:500px;
+	height:250px;
+	
+	/*
+	position:relative;
+	margin-top:50px;
+	margin-left:auto;
+	margin-right:auto;
+	width:30%;
+	*/
+	padding:10px;
+	padding-right:20px;
+	
+	background:#CCCCFF;	
+	box-shadow: 5px 5px 10px 5px #999999;
+	
+	text-align:center;
+		
+}
+
+#login_title
+{	
+	font-size:28.5pt;
+}
+
+#login_subtitle
+{	
+	font-size:13pt;
+	
+}
+
+#login_table
+{
+	width:50px;
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;	
+}

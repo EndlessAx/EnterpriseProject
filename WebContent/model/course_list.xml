@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<courses>
+   <course>
+      <ID>1002</ID> 
+      <name>Calculus One</name>
+      <provider>Coursera</provider>
+      <university>The Ohio State University</university>
+</course>
+<course>
+   <ID>1117</ID>
+   <name>Pre-Calculus</name>
+   <provider>Coursera</provider>
+   <university>University of California, Irvine</university>
+</course>
+</courses>

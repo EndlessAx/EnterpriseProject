@@ -1,0 +1,105 @@
+@CHARSET "UTF-8";
+
+body
+{
+	color:#6677AA;
+	font-family:"Arial";	
+}
+
+.header_box
+{	
+	
+	position:relative;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:30px;
+	padding:10px;
+	padding-right:20px;
+	width:55%;	
+	height:30px;
+	
+	background:#CCCCFF;	
+	box-shadow: 5px 5px 10px 5px #999999;
+	
+}
+
+#header_options
+{
+	float:right;
+}
+
+
+#header_title
+{
+	float:left;
+	font-size: 20pt;	
+}
+
+/* search page */
+ .main_box
+{
+	position:relative;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:150px;
+	padding:10px;
+	padding-right:20px;
+	width:55%;	
+	
+	background:#CCCCFF;	
+	box-shadow: 5px 5px 10px 5px #999999;
+	
+	text-align:center;	
+}
+
+.color_alt
+{
+	color:#6699BB;	
+}
+.color_red
+{
+	color:#FF0000;
+}
+
+.color_black
+{
+	color:#000000;
+}
+
+
+.button_link {
+	
+    background:#EEEEEE;
+    border-style:dashed;
+    border-width:3px;
+    border-radius:5px;                
+}
+
+#search_title
+{	
+	font-size:30pt;			 
+}
+
+#search_options
+{	
+	font-weight:bold;
+}
+
+
+
+/*register page */
+#register_table
+{
+	width:600px;
+	margin-left:auto;
+	margin-right:auto;	
+}
+
+/*End of page gap */
+#page_end
+{
+	height:100px;
+}
+
+
+
