@@ -8,12 +8,14 @@
 	<link rel="stylesheet" type="text/css" href="../view/css/login.css">
 </head>
 <body>
+	<?php include('top.html');?>
 <form method="post" action='../controller/control.php'>
 	<div id="login_box">						
-		<span id="login_title">Welcome to <span class='color_alt'>Perception </span></span><br/>
+		<span class="loginTitle"><span class='perception'>Perception </span></span><br/>
+		<br/>
 		<span id='login_subtitle'>
-			<span class='color_alt'><b>Log in</b> </span>or
-			<span class='color_alt'><b>register</b> </span>to perceive more.
+			<span class='secondline'><b>Log in</b> </span>or
+			<span class='secondline'><b><a href="../controller/control.php?c_header_register=1">register</b></a> </span>to perceive more.
 		</span><br/><br/>		
 		
 		<!-- Display login error if exists --> 
@@ -23,27 +25,28 @@
 						 
 		<table id="login_table">	
 			<tr>
-				<td align="right"><b>Email:</b></td>
+				<td align="right">Email:</td>
 				<td><input type="text" name='user_email'/></td>
 			</tr>
 			<tr>
-				<td align="right"><b>Password:</b></td>
+				<td align="right">Password:</td>
 				<td><input type="password" name='user_password'/></td>
 			</tr>		
 			<tr>
 				<td colspan="2" align="center">															
-					<input type="submit" class="button_link" name="c_login_normal" value="Log in"/>																		
-					<input type="submit" class="button_link" name="c_login_register" value="Register" />												
+					<input type="submit" size="10" class="button_link" name="c_login_normal" value="Log in"/>																		
+					<input type="submit" size="10" class="button_link" name="c_login_register" value="Register" />												
 				</td>					
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-					<div id="fb-root"></div>	  
+					<div id="fb-root"></div>
+					<br/>	  
 					<fb:login-button show-faces='true' width="200" max-rows="1"></fb:login-button>
 				</td>
 			</tr>					
 		</table>
-		<a href='../controller/control.php'>Back to search page</a>
+
 	</div>
 </form>
 </body>

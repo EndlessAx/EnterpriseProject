@@ -22,8 +22,8 @@
 	padding:10px;
 	padding-right:20px;
 	
-	background:#CCCCFF;	
-	box-shadow: 5px 5px 10px 5px #999999;
+	background:#ADADAD;	
+	box-shadow: 5px 5px 10px 5px #47476B;
 	
 	text-align:center;
 		
@@ -36,7 +36,8 @@
 
 #login_subtitle
 {	
-	font-size:13pt;
+	font-size:11pt;
+	color:black;
 	
 }
 
@@ -46,4 +47,16 @@
 	margin-left:auto;
 	margin-right:auto;
 	text-align:center;	
+}
+
+.loginTitle{
+	color:grey;
+	font-size:28pt;
+}
+.secondline{
+	color:#336699;
+}
+.perception{
+	color:#003366;
+	font:"Times New Roman",Times,serif;
 }

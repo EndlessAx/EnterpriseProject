@@ -5,17 +5,17 @@
 	<meta charset="UTF-8">
 	<title>Perception</title>
 	<link rel="stylesheet" type="text/css" href="../view/css/main.css">
-	<link rel="stylesheet" type="text/css" href="../view/css/search_results.css">
+	<link rel="stylesheet" type="text/css" href="../view/css/search_results2.css">
 </head>
 
 <body>
-<?php include('header.html');?>
+<?php include('top.html');?>
 <form method="get" action="../controller/control.php">
 	<div class="results_main_box">		
 		<p id="results_title">
-			<b><?= count($items) ?></b>
-			<span class="color_alt">results for</span> 
-			"<b><?= $identifier ?></b>"			
+			<?= count($items) ?>
+			results for
+			"<font color=blue><i><?= $identifier ?></i></font>"			
 		</p>
 		
 		<?php if ($query_type === QueryType::Course_List) { ?>
