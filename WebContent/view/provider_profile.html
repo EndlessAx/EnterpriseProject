@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="../view/css/main.css"/>
+	<link rel="stylesheet" type="text/css" href="../view/css/provider_profile.css"/>
+	<title>Perception - Provider Admin</title>
+</head>
+<body>
+	<div id="provider_main_box" style='margin-top:50px'>
+		<p>
+			<span id='provider_title'>
+				Perception - Administration Console
+			 	<br/>(<b class='color_alt'>OpenClass</b>)
+			 </span>
+		</p>
+		This is your <b>provider administration</b> page.<br/>
+		You can upload and manage your own courses and materials here.<br/>
+		Click <a href='../controller/control.php'>here</a> to go back to <b>Perception</b>
+		
+		<?php if (isset($provider_message)) { ?>
+			<p id='provider_message'>
+				<b><?= $provider_message ?></b>
+			</p>
+		<?php }?>
+			
+		<div id='provider_command_box'>
+			<form method='POST' action='../controller/control.php'>
+			<div class='provider_command'>
+				<div class='provider_command_details'>
+					<span class='provider_command_title'>Add: <b>Courses</b></span><br/>
+					Uploaded course file should be in <a href='../model/course_info.xml'>this</a> XML-based format.
+				</div>
+				<div class='provider_command_options'>
+					<table>
+						<tr>
+							<td>Title</td>
+							<td><input type=text name='addcourse_title' size="25"/></td>
+						</tr>
+						<tr>
+							<td>ID</td>
+							<td><input type='text' name='addcourse_id' size='25'/></td>							
+						</tr>
+						<tr>
+							<td>File</td>
+							<td><input type='file' name='addcourse_file'/></td>
+						</tr>
+						<tr>
+							<td colspan=2 align='center'>
+								<input type='submit' name='c_provider_addcourse' value='Add course'/>
+							</td>
+						</tr>						
+					</table>
+				</div>								
+			</div>
+			<div class='provider_command'>
+				<span class='provider_command_title'>Delete: <b>Courses</b></span>
+				<div class='provider_command_options'>
+					<table>
+						<tr>
+							<td>ID</td>
+							<td><input type=text name='deletecourse_id' size="25"/></td>
+						</tr>
+						<tr>
+							<td colspan=2 align='center'>
+								<input type='submit' name='c_provider_deletecourse' value='Delete course'/>
+							</td>
+						</tr>						
+					</table>
+				</div>
+			</div>
+			<br/>
+			<br/>
+			<div class='provider_command'>
+				<div class='provider_command_details'>
+					<span class='provider_command_title'>Add: <b>Materials</b></span><br/>
+					Uploaded material file should be in <a href='../model/material_info.xml'>this</a> XML-based format.
+				</div>
+				<div class='provider_command_options'>
+					<table>
+						<tr>
+							<td>Title</td>
+							<td><input type=text name='addmaterial_title' size="25"/></td>
+						</tr>
+						<tr>
+							<td>ID</td>
+							<td><input type='text' name='addmaterial_id' size='25'/></td>							
+						</tr>
+						<tr>
+							<td>File</td>
+							<td><input type='file' name='addmaterial_file'/></td>
+						</tr>
+						<tr>
+							<td colspan=2 align='center'>
+								<input type='submit' name='c_provider_addmaterial' value='Add material'/>
+							</td>
+						</tr>						
+					</table>
+				</div>		
+			</div>
+			<div class='provider_command'>
+				<span class='provider_command_title'>Delete: <b>Courses</b></span>
+				<div class='provider_command_options'>
+					<table>
+						<tr>
+							<td>ID</td>
+							<td><input type=text name='deletematerial_id' size="25"/></td>
+						</tr>
+						<tr>
+							<td colspan=2 align='center'>
+								<input type='submit' name='c_provider_deletematerial' value='Delete material'/>
+							</td>
+						</tr>						
+					</table>
+				</div>
+			</div>
+			</form>
+		</div>
+	
+	</div>
+
+</body>
+</html>

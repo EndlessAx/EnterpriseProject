@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="../view/css/main.css"/>
+	<link rel="stylesheet" type="text/css" href="../view/css/provider_login.css"/>
+	<title>Perception - Provider Login</title>
+</head>
+<body>
+	<div class="main_box" style='margin-top:50px'>		
+		<p id='provider_title'>		
+		<span class='color_alt'>Index your content with</span><br/>
+		<b>Perception</b>
+		</p>
+		<span id='provider_description'>
+		The opportunity to have your 
+		<b class='color_alt'>courses</b> and <b class='color_alt'>materials</b>
+		 perceived by many.<br/>
+		Email us at <a href="mailto:orion@perception.com" target="_top">orion@perception.com</a> to obtain your <b class='color_alt'>key</b> to <b>Perception</b> today!				
+		</span>
+		<br/>
+		<br/>
+		<div>
+			Already have one? Log in with your <b>API key</b> below!<br/>
+			<form method='POST' action='../controller/control.php'>
+				<input type='text' name='provider_key'/><br/>
+				<input type='submit' class='button_link' name='c_provider_login' value='Log in'/>
+			</form>
+		</div>
+		<br/>	
+		<a href='../controller/control.php'>Back to Perception</a>
+	</div>
+	
+
+</body>
+</html>

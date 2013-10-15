@@ -9,7 +9,7 @@
 	margin-top:70px;
 	padding:10px;
 	padding-right:20px;
-	width:70%;	
+	width:60pc;	
 	
 	background:#CCCCFF;	
 	box-shadow: 5px 5px 10px 5px #999999;
@@ -29,9 +29,7 @@
 
 #course_content_box_inner
 {
-	width:700px;
-	overflow:hidden;
-	
+	overflow:hidden;	
 }
 
 #course_title
@@ -62,5 +60,5 @@
 {
 	float:left;
 	color:black;
-	width:385px;	
+	width:35pc;	
 }

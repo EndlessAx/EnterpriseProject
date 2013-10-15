@@ -12,25 +12,33 @@
 	<div class="main_box">
 		<br/>
 		<span id="search_title">Perception</span>
-		<br/>			
+		<br/>		
+		<br/>
 			<input id='searchbox' type="text" name="search_text" size="60" maxlength="35"/>
 			<p>	
-				<b>List</b>&nbsp;
+				<b>List up to</b>&nbsp;
 				<select name='query_num'>
 				  <option value="10">10</option>
 				  <option value="25">25</option>
 				  <option value="50">50</option>
 				  <option value="100">100</option>
-				</select> 								
+				</select>							
 				<input type="radio" name="query_type" value="course_list" checked="checked"><b>Courses</b>  
 				<input type="radio" name="query_type" value="material_list"><b>Materials</b>
 				<br/>																  		
 			<p/>				
 			<input class="button_link" type="submit" name='c_home_search' value="Search" size=30 />
 			<br/><br/>
-			Alternatively, 
-			<a href='/perception/WebContent/controller/control.php?c_header_login=1'>login</a> or 
-			<a href='/perception/WebContent/controller/control.php?c_header_register=1'>register</a>
+			<?php if (isset($_SESSION['user_name'])) {?>
+				Welcome back, <b><?= $_SESSION['user_name'] ?></b><br/>
+				<input type='submit' class='button_link' name='c_home_logout' value='Log out'/>
+			<?php } else { ?>
+				Alternatively, 
+				<a href='../view/login.html'>login</a> or 
+				<a href='../view/register.html'>register</a><br/>
+				Interested in providing your courses for all to perceive? Click 
+				<a href='../view/provider_login.html'>here</a>
+			<?php } ?>
 	</div>
 </form>
 </body>

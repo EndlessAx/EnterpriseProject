@@ -68,8 +68,9 @@ function User_RegisterNormal($name, $email, $password, $confirmpassword)
 	}
 	
 	//User added.
-	setLoginCookie($name, md5($password));	
-	header("Location: ../controller/control.php");			
+	setLoginSession($name);	
+	include('../view/home.html');
+	return;			
 }
 
 
@@ -88,6 +89,7 @@ function DeleteUser($user_id)
 		//Set cookie "logged out"
 		//include('../view/search.html');		
 	}	
+	return;
 } 
 
 function GetUserByEmail($email)
@@ -99,11 +101,14 @@ function User_Login($email, $password)
 {		
 	$user = DAO_ValidateLogin($email, md5($password));
 	if ($user) {						
-		setLoginCookie($user->name, $user->password);
-		header("Location: ../controller/control.php");
-	} else if (!$GLOBALS['exception']) {			
-		unsetLoginCookie();
-		header("Location: ../controller/control.php?c_login_error=1");
+		setLoginSession($user->name);
+		include('../view/home.html');
+		
+	} else if (!$GLOBALS['exception']) {
+							
+		$login_error = "Invalid email/password";
+		include('../view/login.html');
+		
 	} else {
 		Control_DisplayErrorMessage("Login failed.");
 		return false;
@@ -113,8 +118,8 @@ function User_Login($email, $password)
 
 function User_Logout()
 {
-	unsetLoginCookie();
-	header("Location: ../controller/control.php");
+	unsetLoginSession();
+	include('../view/home.html');
 }
 
 
@@ -127,18 +132,20 @@ function User_LoginStatus($name, $password)
 }
 
 
-function setLoginCookie($name, $password)
-{	
-	
-	setcookie('user_name', $name);	
-	setcookie('user_password',$password);
-	
+function setLoginSession($name)
+{		
+	$_SESSION['user_name'] = $name;	
+	return;
 }
 
-function unsetLoginCookie()
+function unsetLoginSession()
 {
+	unset($_SESSION['user_name']);
+	return;
+	/*
 	setcookie('user_name', '', time()-3600);	
-	setcookie('user_password', '', time()-3600);	
+	setcookie('user_password', '', time()-3600);
+	*/	
 }
 
 //Check if user is logged in via cookies.
@@ -148,4 +155,4 @@ function unsetLoginCookie()
 
 
 
-?> 
+?>

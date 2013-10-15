@@ -9,7 +9,24 @@
 </head>
 
 <body>
-<?php include('header.html');?>
+<form method="POST" action='../controller/control.php'>
+	<div class='header_box'>
+		<a id='header_title' href='../controller/control.php'>
+			<b>Perception</b>
+		</a>&nbsp;&nbsp;&nbsp;&nbsp;	
+		<span id='header_options'>
+			<?php if (isset($_SESSION['user_name'])) { ?>
+				Logged in as <b><?= $_SESSION['user_name']?>.</b>&nbsp;&nbsp;&nbsp;			
+				<input type='submit' class='button_link' name='c_header_profile' value='Profile'/>
+				<input type='submit' class='button_link' name='c_header_logout' value='Logout'/>
+			<?php } else { ?>			
+				<input type='submit' class='button_link' name='c_header_login' value='Login'/>
+				<b>or</b>
+				<input type='submit' class='button_link' name='c_header_register' value='Register'/>		
+			<?php } ?>
+		</span>
+	</div>
+</form>
 <form method="get" action="../controller/control.php">
 	<div class="results_main_box">		
 		<p id="results_title">
@@ -18,7 +35,7 @@
 			"<b><?= $identifier ?></b>"			
 		</p>
 		
-		<?php if ($query_type === QueryType::Course_List) { ?>
+		<?php if ($query_type === QUERY_COURSE_LIST) { ?>
 			<input type='hidden' name='query_type' value='course_info' />
 			<?php foreach ($items as $item) { ?>						
 				<div id="results_course_box">						
@@ -44,7 +61,7 @@
 			<?php } ?>
 		<?php } ?>
 		
-		<?php if ($query_type === QueryType::Material_List) { ?>
+		<?php if ($query_type === QUERY_MATERIAL_LIST) { ?>
 			<input type='hidden' name='query_type' value='material_info' />
 			<?php foreach ($items as $item) { ?>						
 				<div id="results_course_box">						

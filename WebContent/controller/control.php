@@ -2,13 +2,13 @@
 
 require('functions/search_module.php');
 require('functions/user_module.php');
-
-error_reporting(E_ALL);
+require('functions/cms_module.php');
 
 //Global variable for exception data;
 $exception = "";
 
-//Validate login status via cookies
+//Validate login status via sessions
+session_start();
 $login_status = setLoginStatus();
  	
 //Default command is home. Otherwise, get command
@@ -100,26 +100,64 @@ if (strstr($command, 'register_'))
 				
 		case "c_register_facebook":
 			//user interaction command
-			echo "<h1>registered with facebook...</h1>";
+			//echo "<h1>registered with facebook...</h1>";
 			break;
 	}	
+	
+	return;
 }
 
 if (strstr($command, "results_"))
 {
 	switch (true)
 	{
+		case strstr($command, 'courseinfo_'):
+			$parts = explode("_",$command);
+			$identifier = $parts[3];
+			Search_ExecuteQuery($identifier, 'course_info', 0);
+			break;
+		
 		case strstr($command, 'info_'):
 			$parts = explode("_",$command);
 			$identifier = $parts[3];				
-			Search_ExecuteQuery($identifier, $_REQUEST['query_type'], 0);								 
-								 
+			Search_ExecuteQuery($identifier, $_REQUEST['query_type'], 0);								 								 
 			break;
+
 		case strstr($command, 'interest_'):		
 			Search_ExecuteQuery( $_REQUEST['search_text'],
 								 $_REQUEST['query_type'], 0);
-			break;		
+			break;
+
+		
 	}	
+}
+
+if (strstr($command, "provider_"))
+{
+	switch (true)
+	{
+		case strstr($command, 'login'):
+			include('../view/provider_profile.html');
+			break;		
+			
+		case strstr($command, 'addcourse'):
+			CMS_AddCourse(	$_REQUEST['addcourse_title'],
+							$_REQUEST['addcourse_id'],
+							$_REQUEST['addcourse_file']);			
+			break;
+		case strstr($command, 'deletecourse'):
+			CMS_DeleteCourse($_REQUEST['deletecourse_id']);
+			break;
+			
+		case strstr($command, 'addmaterial'):
+			CMS_AddMaterial($_REQUEST['addmaterial_title'],
+							$_REQUEST['addmaterial_id'],
+							$_REQUEST['addmaterial_file']);
+			break;
+		case strstr($command, 'deletematerial'):
+			CMS_DeleteMaterial($_REQUEST['deletematerial_id']);
+				break;
+	}
 }
 
 
@@ -131,13 +169,9 @@ function Control_DisplayErrorMessage($message)
 
 function setLoginStatus()
 {
-	if (isset($_COOKIE['user_name']) && isset($_COOKIE['user_password']))
-	{		
-		if (User_LoginStatus($_COOKIE['user_name'], $_COOKIE['user_password']))
-		{
-			setLoginCookie($_COOKIE['user_name'], $_COOKIE['user_password']);
-			return true;
-		}
+	if (isset($_SESSION['user_name']))
+	{				
+			return true;		
 	}	
 	return false;
 }

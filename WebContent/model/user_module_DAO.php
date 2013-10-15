@@ -8,10 +8,10 @@
 //User class. Holds information about users.
 class User
 {
-	public $id;
-	public $name;
-	public $email;
-	public $password;	
+	var $id;
+	var $name;
+	var $email;
+	var $password;	
 }
 
 /*
@@ -22,34 +22,44 @@ class User
  */
 
 function connectMYSQLI()
-{
-	$mysqli = new mysqli("localhost", "hgoh", "", "perception_users");
+{	
+	$mysql = mysql_connect("attr192.srvr:4321", "perception", "qwerty");
+	//$mysql = mysql_connect("localhost","hgoh","");
 	
-	if ($mysqli->connect_errno) {
-		$GLOBALS['exception'] = "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;		
+	if (!$mysql) {
+		$GLOBALS['exception'] = 'Unable to connect to MySQL';
 		return false;
 	}
+	
+	mysql_select_db('perception', $mysql);
+	//mysql_select_db('perception_users', $mysql);
+	
+	/*
+	if ($mysql->connect_errno) {
+		$GLOBALS['exception'] = "Failed to connect to MySQL: (" . $mysql->connect_errno . ") " . $mysql->connect_error;		
+		return false;
+	}*/
 		
-	return $mysqli;
+	return $mysql;
 	
 }
 
 //Add user to database
 function DAO_AddUser($name, $email, $password)
 {		
-	$mysqli = connectMYSQLI();	
-	if (!$mysqli) return false;		
+	$mysql = connectMYSQLI();	
+	if (!$mysql) return false;		
 			
 	//hash passwords before entering
 	$md5password = md5($password);
-	if (!$mysqli->query("INSERT INTO users (name,email,password)
+	if (!$mysql = mysql_query("INSERT INTO users (name,email,password)
 							VALUES ('$name','$email','$md5password')"))
 	{
 		$GLOBALS['exception'] = 'Failed to insert user';
 		return false;
 	}	
 		
-	$mysqli->close();		
+	//$mysql->close();		
 	return true;	
 	
 }
@@ -58,41 +68,41 @@ function DAO_AddUser($name, $email, $password)
 function DAO_DeleteUser($user_id)
 {	
 	
-	$mysqli = connectMYSQLI();
-	if (!mysqli) return false;
+	$mysql = connectMYSQLI();
+	if (!mysql) return false;
 			
 	//Delete user record from all relevant records
-	if (!$mysqli->query("DELETE FROM users WHERE id='$user_id'") ||
-		!$mysqli->query("DELETE FROM user_completions WHERE user_id='$user_id'") ||
-		!$mysqli->query("DELETE FROM user_interests WHERE user_id='$user_id'") ||
-		!$mysqli->query("DELETE FROM user_reviews WHERE user_id='$user_id'") ||
-		!$mysqli->query("DELETE FROM user_ratings WHERE user_id='$user_id'")) 
+	if (!$mysql = mysql_query("DELETE FROM users WHERE id='".$user_id."'") ||
+		!$mysql = mysql_query("DELETE FROM user_completions WHERE user_id='".$user_id."'") ||
+		!$mysql = mysql_query("DELETE FROM user_interests WHERE user_id='".$user_id."'") ||
+		!$mysql = mysql_query("DELETE FROM user_reviews WHERE user_id='".$user_id."'") ||
+		!$mysql = mysql_query("DELETE FROM user_ratings WHERE user_id='".$user_id."'")) 
 	{
 		$GLOBALS['exception'] = "Failed to delete user.";
 		return false;
 	}
 	
-	$mysqli->close();	
+	//$mysql->close();	
 	return true; 
 }
 
 //Verify user exists based on name and hashed password
 function DAO_UserIsValid_Name($name, $password)
-{
-	
-	$mysqli = connectMYSQLI();
-	if (!$mysqli) return false;
+{	
+	$mysql = connectMYSQLI();
+	if (!$mysql) return false;
 			
-	$result = $mysqli->query("SELECT id FROM users WHERE name='$name' AND password='$password'");	
+	$result = mysql_query("SELECT id FROM users WHERE name='".$name."' AND password='".$password."'");
+		
 	if (!$result) {
 		$GLOBALS['exception'] = "Failed to select user.";		
 		return false;
 	}
 	
-	$mysqli->close();
+	//$mysql->close();
 
 	//If no results, user is not valid. Otherwise, user is valid
-	if ($result->num_rows === 0) {
+	if (!$result || mysql_num_rows($result) === 0) {
 		return false;
 	} else { 
 		return true;
@@ -102,22 +112,23 @@ function DAO_UserIsValid_Name($name, $password)
 //Verify user exists based on email and hashed password
 function DAO_ValidateLogin($email, $password)
 {
-	$mysqli = connectMYSQLI();
-	if (!$mysqli) return false;
+	$mysql = connectMYSQLI();
+	if (!$mysql) return false;
 		
-	$result = $mysqli->query("SELECT name,password FROM users WHERE email='$email' AND password='$password'");
+	$result = mysql_query("SELECT name,password FROM users WHERE email='".$email."' AND password='".$password."'");
 	if (!$result) {
 		$GLOBALS['exception'] = "Failed to select user.";
 		return false;
 	}
 	
-	$mysqli->close();
+	//$mysql->close();
+	
 	//If no results, user is not valid. Otherwise, user is valid
-	if ($result->num_rows === 0) {
+	if (!$result || mysql_num_rows($result) === 0) {
 		return false;
 	} else {
-		$result->data_seek(0);
-		$row = $result->fetch_assoc();
+		mysql_data_seek($result, 0);
+		$row = mysql_fetch_assoc($result);
 		
 		$user = new User;		
 		$user->name = $row['name'];
@@ -129,21 +140,22 @@ function DAO_ValidateLogin($email, $password)
 function DAO_GetUserByName($name)
 {
 
-	$mysqli = connectMYSQLI();
-	if (!$mysqli) return false;
+	$mysql = connectMYSQLI();
+	if (!$mysql) return false;
 	
-	$result	 = $mysqli->query("SELECT id,name,email FROM users WHERE name='$name'");
+	$result	 = $mysql = mysql_query("SELECT id,name,email FROM users WHERE name='".$name."'");
 	if (!$result) {
 		$GLOBALS['exception'] = "Failed to select user.";
 		return false;
 	}
-	$mysqli->close();
+	
+	//$mysql->close();
 		
-	if ($result->num_rows === 0) {
+	if (!$result || mysql_num_rows($result) === 0) {
 		return false;
 	} else {				
-		$result->data_seek(0);
-		$row = $result->fetch_assoc();
+		mysql_data_seek($result, 0);
+		$row = mysql_fetch_assoc($result);
 		
 		$user = new User;
 		$user->id = $row['id'];
@@ -156,22 +168,22 @@ function DAO_GetUserByName($name)
 function DAO_GetUserByEmail($email)
 {	
 	
-	$mysqli = connectMYSQLI();
-	if (!$mysqli) return false;
+	$mysql = connectMYSQLI();
+	if (!$mysql) return false;
 		
-	$result	 = $mysqli->query("SELECT id,name,email,password FROM users WHERE email='$email'");	
+	$result	= mysql_query("SELECT id,name,email,password FROM users WHERE email='".$email."'");	
 	if (!$result) {
 		$GLOBALS['exception'] = "Failed to select user.";
 		return false;
 	}	
-	$mysqli->close();
+	//$mysql->close();
 
-	if ($result->num_rows === 0) {
+	if (!$result || mysql_num_rows($result) === 0) {
 		return false;
 	} else {
-		$result->data_seek(0);
-		$row = $result->fetch_assoc();
-				
+		mysql_data_seek($result, 0);
+		$row = mysql_fetch_assoc($result);
+		
 		$user = new User;
 		$user->id = $row['id'];
 		$user->name = $row['name'];

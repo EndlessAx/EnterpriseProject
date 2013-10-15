@@ -17,9 +17,9 @@
 		</span><br/><br/>		
 		
 		<!-- Display login error if exists --> 
-		<?php if (isset($login_error) && !$login_error) { ?>				
-			<b class='color_red' >Invalid email/password</b>				
-		<?php } ?>
+		<?php if (isset($login_error)) { ?>				
+			<b class='color_red' ><?= $login_error ?></b>				
+		<?php } ?>			
 						 
 		<table id="login_table">	
 			<tr>

@@ -1,0 +1,66 @@
+@CHARSET "UTF-8";
+
+ #provider_main_box
+{
+	position:relative;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:150px;
+	padding:10px;
+	padding-right:20px;
+	width:55%;	
+	
+	background:#CCCCFF;	
+	box-shadow: 5px 5px 10px 5px #999999;
+	
+	text-align:left;	
+}
+
+#provider_title
+{
+	font-size: 23pt;
+}
+
+#provider_message
+{
+	font-size:12pt;
+}
+
+#provider_command_box
+{
+	margin-top:20px;
+	
+}
+
+.provider_command
+{
+	margin-top:10px;	
+	overflow:hidden;
+			
+	background-color:#DDDDDD;
+	padding:10px;			
+	border-radius:5px;		
+	box-shadow: 10px 10px 5px #888888;	
+	
+	
+}
+
+.provider_command_title
+{
+	font-size:15pt;
+}
+
+.provider_command_details
+{
+	float:left;
+	width:13pc;
+}
+
+.provider_command_options
+{
+	float:right;
+	font-weight: bold;
+	
+	
+}
+

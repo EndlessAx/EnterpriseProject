@@ -4,8 +4,8 @@
 			<b>Perception</b>
 		</a>&nbsp;&nbsp;&nbsp;&nbsp;	
 		<span id='header_options'>
-			<?php if ($GLOBALS['login_status'] === true) { ?>
-				Logged in as <b><?= $_COOKIE['user_name']?>.</b>&nbsp;&nbsp;&nbsp;			
+			<?php if (isset($_SESSION['user_name'])) { ?>
+				Logged in as <b><?= $_SESSION['user_name']?>.</b>&nbsp;&nbsp;&nbsp;			
 				<input type='submit' class='button_link' name='c_header_profile' value='Profile'/>
 				<input type='submit' class='button_link' name='c_header_logout' value='Logout'/>
 			<?php } else { ?>			
