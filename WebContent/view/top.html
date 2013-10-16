@@ -1,0 +1,23 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="/EnterpriseProject/WebContent/view/css/main.css">
+</head>
+<div class="bar">
+<div class="header">
+<ul>
+<li><a class="c"  href="../controller/control.php">Perception</a></li>
+<li><form method="GET" action="../controller/control.php">
+
+<input class="search" type="text" name="search_text" value="Search course..." onfocus="if(this.value == 'Search course...'){this.value = '';}" onblur="if(this.value == ''){this.value='Search course...';}">
+<input class="searchb" type="image" src="/EnterpriseProject/search.png" alt="Submit" width="20" height="20" name='c_home_search' value="Search">
+<input type="hidden" name="query_num" value="100">
+</form></li>
+<li style="float:right">
+<a class="c" href="../controller/control.php?c_header_login=1"><small>Have an account? <b>Sign in</b></small></a>
+or<a class="c" href="../controller/control.php?c_header_register=1"><small><b>Sign up!</b></small></a>
+
+</li>
+</ul>
+</div>
+</div>
+</html>
