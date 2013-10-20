@@ -106,7 +106,7 @@ body
 
 
 div.bar {
-	background-image: url('/EnterpriseProject/header_background.jpg');
+	background-image: url('../image/header_background.jpg');
 	height:40px;	
 	width:100%;
 	position:fixed;
@@ -163,7 +163,7 @@ a {
 }
 
 .search {
-    border-radius: 18px 18px 18px 18px;
+    border-radius: 18px 18px 18px 18px !important;
     margin-left: 20px;
     padding-left: 10px;
     padding-right: 25px;
@@ -264,3 +264,38 @@ ul {
 	text-align: center;
 }
 
+
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"]{
+    display: inline-block;
+    height: 22px;
+    padding: 4px 6px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgb(85, 85, 85);
+    border-radius: 3px 3px 3px 3px;
+}
+
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(204, 204, 204);
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+
+textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus {
+    border-color: rgba(82, 168, 236, 0.8);
+    outline: 0px none;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(82, 168, 236, 0.6);
+}
+
+input[type="submit"], button {
+	color: rgb(255, 255, 255);
+	background-color: rgb(1, 154, 210);
+	background-repeat: repeat-x;
+	background-image: linear-gradient(#194775, #003366);
+	font-weight: bold;
+	border-radius: 4px 4px 4px 4px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}

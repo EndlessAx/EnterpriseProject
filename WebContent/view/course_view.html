@@ -4,12 +4,13 @@
 	<meta charset="UTF-8">
 	<title>Perception - <?= $course->name ?></title>	
 	<link rel="stylesheet" type="text/css" href="../view/css/main.css">
-	<link rel="stylesheet" type="text/css" href="../view/css/course_view.css">
+	<link rel="stylesheet" type="text/css" href="../view/css/course_view2.css">
 </head>
 <body>
 	<?php include('top.html'); ?>
 	<div class="course_main_box">
-		<div id="course_main_box_card">								
+		<div id="course_main_box_card">	
+			<img src="<?php echo $course->logoURI;?>"></br>							
 			<span id="course_title"><b><?= $course->name ?></b></span><br/>
 			<span id="course_subtitle">				
 				<span class='color_alt'><?= $course->provider ?></span> / 
@@ -17,10 +18,15 @@
 			</span>
 			<div id='course_content_box'>
 				<div id='course_content_box_inner'>
+					<div id='course_video'><iframe id='course_video' height='300' width='300' src='<?= $course->videoURI ?>'> </iframe></div>
 					<div id='course_details'>
 						<div id='course_description'>					
 							<?= $course->description ?>
-						</div>					
+						</div>
+						<p>
+							<b class='color_alt'>Session (Type/Start):</b><br/>
+							<?php echo $course->startdate;?>
+						</p>					
 						<p>
 							<b class='color_alt'>Duration:</b><br/>
 							<?= $course->duration ?>
@@ -34,33 +40,29 @@
 							<input type=submit class='button_link' value='Add to completed'/>
 						</p>
 					</div>					
-					<div id='course_video'>
-						<iframe id='course_video' height='300' width='300' src='<?= $course->videoURI ?>'> </iframe>						
-					</div>					
+					
 				</div>
 			</div>
 			
 				<!-- If user has completed -->
 				<div id='course_ratereview'>
-				<form method='POST' action='../controller/control.php'>
 					<p>
 						<b>Tell us about your experience!</b>
 					</p>
-				
-					<!-- For each review, print username/rating/review -->
-					<div id='course_rating'>				
-						<b class='color_alt'>Rating:</b>
-						<input type="radio" name="rating_1" value="1"><b>1</b>  
-						<input type="radio" name="rating_2" value="2"><b>2</b>
-						<input type="radio" name="rating_3" value="3" checked='checked'><b>3</b>
-						<input type="radio" name="rating_4" value="4"><b>4</b>
-						<input type="radio" name="rating_5" value="5"><b>5</b>
-					</div>					
-					<div id='course_review'>
-						<textarea rows='10' cols='40'></textarea>
-					</div>									
-				</form>
 				</div>
+				
+				<!-- For each review, print username/rating/review -->
+				<div id='course_rating'>				
+					<b class='color_alt'>Rating:</b>
+					<input type="radio" name="rating_1" value="1"><b>1</b>  
+					<input type="radio" name="rating_2" value="2"><b>2</b>
+					<input type="radio" name="rating_3" value="3" checked='checked'><b>3</b>
+					<input type="radio" name="rating_4" value="4"><b>4</b>
+					<input type="radio" name="rating_5" value="5"><b>5</b>
+				</div>					
+				<div id='course_review'>
+					<input type="textarea"   />
+				</div>									
 		</div>		
 	</div>
 	<div id='page_end'></div>

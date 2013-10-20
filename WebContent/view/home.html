@@ -21,30 +21,28 @@
 		<input name="search_text" type="text" size="40" placeholder="Search..." x-webkit-speech/>			
 		<br/>
 		<input class="button_link" type="submit" name='c_home_search' value="Search"/>
-			<p>
-				<font color="black">	
-					List&nbsp;
-					<select name='query_num'>
-					  <option value="10">10</option>
-					  <option value="25">25</option>
-					  <option value="50">50</option>
-					  <option value="100">100</option>
-					</select> 								
-					<input type="radio" name="query_type" value="course_list" checked="checked">Courses  
-					<input type="radio" name="query_type" value="material_list">Materials
-					<br/>
-				</font>																  		
-			<p/>							
-			<br/>						
+			<p><font color="black">	
+				List&nbsp;
+				<select name='query_num'>
+				  <option value="10">10</option>
+				  <option value="25">25</option>
+				  <option value="50">50</option>
+				  <option value="100">100</option>
+				</select> 								
+				<input type="radio" name="query_type" value="course_list" checked="checked">Courses  
+				<input type="radio" name="query_type" value="material_list">Materials
+				<br/>																  		
+			<p/>				
+			<br/>
 			<?php if (isset($_SESSION['user_name'])) {?>
 				Welcome back, <b><?= $_SESSION['user_name'] ?></b><br/>
 				<input type='submit' class='button_link' name='c_home_logout' value='Log out'/>
 			<?php } else { ?>
-				Alternatively, 
-				<a href='../view/login.html'>login</a> or 
-				<a href='../view/register.html'>register</a><br/>
-				Interested in providing your courses for all to perceive? Click 
-				<a href='../view/provider_login.html'>here</a>
+			Alternatively, 
+			<a href='../controller/control.php?c_header_login=1'>login</a> or 
+			<a href='../controller/control.php?c_header_register=1'>register</a></br>
+			Interested in providing your courses for all to perceive? Click 
+			<a href='../view/provider_login.html'>here</a>
 			<?php } ?>
 	</div>
 </form>

@@ -5,23 +5,37 @@
 
 
 
-function CMS_AddCourse($title, $id, $file)
+function CMS_AddCourse($apikey, $xml)
 {
+	$opts = array(
+			'http' => array(
+			'method'  => 'POST',
+			'header'=> "Content-type: application/xml",
+			'content' => $xml
+			)
+		);	
 	
+	$context  = stream_context_create($opts);
 	
+	if ($id = file_get_contents("http://localhost:8080/COMP9323-MOOCIndexSearchServices/courses/add?APIkey=". $apikey, false, $context)) {	
+		$provider_message =  'Added course: <a href="http://comp4920.com/perception/WebContent/controller/control.php?query_type=course_info&c_results_info_'.$id.'=View+course">'.$id .'</a>';
+		include('../view/provider_profile.html');
+	}
 	
-	
-	$provider_message = 'Added course: '.$title;
-	include('../view/provider_profile.html');
-	return;
-	
+	return;	
 }
 
-function CMS_DeleteCourse($id)
+function CMS_DeleteCourse($apikey,$id)
 {
-	
-	$provider_message = 'Added course: '.$title;
-	include('../view/provider_profile.html');
+	$opts = array(
+		'http' => array(
+			'method'  => 'DELETE'));
+	$context  = stream_context_create($opts);
+	if (!file_get_contents('http://localhost:8080/COMP9323-MOOCIndexSearchServices/courses/'.$id.'/delete?APIkey='. $apikey, false, $context)) {	
+		$provider_message = 'Delete course: <a href="http://comp4920.com/perception/WebContent/controller/control.php?query_type=course_info&c_results_info_'.$id.'=View+course">'.$id .		'</a>';
+		include('../view/provider_profile.html');
+	}
+
 	return;
 }
 
@@ -29,16 +43,22 @@ function CMS_AddMaterial($title, $id, $file)
 {
 	
 	$provider_message = 'Added course: '.$title;
+	
 	include('../view/provider_profile.html');
 	return;
 }
 
-function CMS_DeleteMaterial($id)
+function CMS_DeleteMaterial($apikey, $id)
 {
 	
-	$provider_message = 'Added course: '.$title;
-	include('../view/provider_profile.html');
-	return;
+	$opts = array(
+		'http' => array(
+			'method'  => 'DELETE'));
+	$context  = stream_context_create($opts);
+	if (!file_get_contents('http://localhost:8080/COMP9323-MOOCIndexSearchServices/materials/'.$id.'/delete?APIkey='. $apikey, false, $context)) {	
+		$provider_message = 'Delete materials: <a href="http://comp4920.com/perception/WebContent/controller/control.php?query_type=material_info&c_results_info_'.$id.'=View+material">'.$id .		'</a>';
+		include('../view/provider_profile.html');
+	}
 }
 
 ?>

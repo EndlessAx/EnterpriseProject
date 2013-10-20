@@ -27,6 +27,7 @@ class Material
 	public $courseName;
 
 	public $googleDriveID;
-	public $viewLink;	}
+	public $viewLink;	
+}
 
 ?>

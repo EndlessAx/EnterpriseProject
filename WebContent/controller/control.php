@@ -6,6 +6,7 @@ require('functions/cms_module.php');
 
 //Global variable for exception data;
 $exception = "";
+$apikey;
 
 //Validate login status via sessions
 session_start();
@@ -133,29 +134,32 @@ if (strstr($command, "results_"))
 }
 
 if (strstr($command, "provider_"))
-{
+{	
+	if (isset($_POST['provider_key'])) {
+		$_SESSION['apikey'] = $_POST['provider_key'];
+	}
 	switch (true)
 	{
 		case strstr($command, 'login'):
 			include('../view/provider_profile.html');
+			
 			break;		
 			
 		case strstr($command, 'addcourse'):
-			CMS_AddCourse(	$_REQUEST['addcourse_title'],
-							$_REQUEST['addcourse_id'],
-							$_REQUEST['addcourse_file']);			
+			CMS_AddCourse(	$_SESSION['apikey'],
+							$_POST['xml']);			
 			break;
 		case strstr($command, 'deletecourse'):
-			CMS_DeleteCourse($_REQUEST['deletecourse_id']);
+			CMS_DeleteCourse($_SESSION['apikey'],$_REQUEST['deletecourse_id']);
 			break;
 			
 		case strstr($command, 'addmaterial'):
-			CMS_AddMaterial($_REQUEST['addmaterial_title'],
+			CMS_AddMaterial($_SESSION['apikey'], $_REQUEST['addmaterial_title'],
 							$_REQUEST['addmaterial_id'],
 							$_REQUEST['addmaterial_file']);
 			break;
 		case strstr($command, 'deletematerial'):
-			CMS_DeleteMaterial($_REQUEST['deletematerial_id']);
+			CMS_DeleteMaterial($_SESSION['apikey'], $_REQUEST['deletematerial_id']);
 				break;
 	}
 }
@@ -177,5 +181,3 @@ function setLoginStatus()
 }
 
 ?>
-	
-	

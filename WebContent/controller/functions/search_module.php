@@ -66,25 +66,25 @@ function sendServiceRequest($identifier, $query_type, $num_results)
 	switch ($query_type)
 	{				
 		case QUERY_COURSE_LIST:
-			$query_URL = "http://attr192.srvr.cse.unsw.edu.au/COMP9323-MOOCIndexSearchServices/courses/gsearch?";
+			$query_URL = "http://localhost:8080/COMP9323-MOOCIndexSearchServices/courses/gsearch?";
 			$query_string = http_build_query(array('q' => $identifier, 'num' => $num_results));
 			//remove when finished debugging
 			//$xmlResponse = file_get_contents("../model/course_list.xml");
 			break;
 		case QUERY_COURSE_INFO:
-			$query_URL = "http://attr192.srvr.cse.unsw.edu.au/COMP9323-MOOCIndexSearchServices/courses/";
+			$query_URL = "http://localhost:8080/COMP9323-MOOCIndexSearchServices/courses/";
 			$query_string = $identifier;	
 			//remove when finished debugging		
 			//$xmlResponse = file_get_contents("../model/course_info.xml");
 			break;
 		case QUERY_MATERIAL_LIST:			
-			$query_URL = "http://attr192.srvr.cse.unsw.edu.au/COMP9323-MOOCIndexSearchServices/materials/search?";
+			$query_URL = "http://localhost:8080/COMP9323-MOOCIndexSearchServices/materials/search?";
 			$query_string = http_build_query(array('q' => $identifier, 'num' => $num_results));
 			//remove when finished debugging
 			//$xmlResponse = file_get_contents("../model/material_list.xml");			
 			break;
 		case QUERY_MATERIAL_INFO:
-			$query_URL = "http://attr192.srvr.cse.unsw.edu.au/COMP9323-MOOCIndexSearchServices/materials/";
+			$query_URL = "http://localhost:8080/COMP9323-MOOCIndexSearchServices/materials/";
 			$query_string = $identifier;		
 			//remove when finished debugging
 			//$xmlResponse = file_get_contents("../model/material_info.xml");
@@ -168,14 +168,13 @@ function getXML_Course_Info($course_element)
 	$newCourse->name = $course_element->name;
 	$newCourse->provider = $course_element->provider;
 	$newCourse->university = $course_element->university;
-	
+	$newCourse->startdate = $course_element->startDate;
 	$newCourse->description = $course_element->description;
 	$newCourse->duration = $course_element->duration;
 	$newCourse->website = $course_element->website;
 	$newCourse->logoURI = $course_element->logoURI;
 	$newCourse->videoURI = $course_element->videoURI;
-
-	//$newCourse->instructors = $course_element->instructors;
+	$newCourse->instructors = $course_element->instructors;
 
 	return $newCourse;
 }
@@ -191,7 +190,7 @@ function getXML_Material_List($material_elements)
 		$newMaterial->courseName = urldecode($material->courseName);
 		$newMaterial->ID = $material->ID;
 		$newMaterial->title = urldecode($material->title);
-	
+		
 		$material_list[] = $newMaterial;
 	}	
 	

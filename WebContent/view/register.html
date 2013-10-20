@@ -25,7 +25,7 @@
 		</p>
 		
 		<!-- Display errors if they exist -->	
-		<?php if (isset($input_errors)) { ?>
+		<?php if (isset($input_errors) && strlen($input_errors) > 0) { ?>
 			<span class='color_red'><b> <?= $input_errors ?></b></span>
 		<?php } ?>
 		

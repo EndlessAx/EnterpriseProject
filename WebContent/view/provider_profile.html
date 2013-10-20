@@ -26,24 +26,18 @@
 			
 		<div id='provider_command_box'>
 			<form method='POST' action='../controller/control.php'>
+			<input type="hidden" name="apikey" value="<?= $_POST['provider_key'] ?>">
 			<div class='provider_command'>
 				<div class='provider_command_details'>
 					<span class='provider_command_title'>Add: <b>Courses</b></span><br/>
-					Uploaded course file should be in <a href='../model/course_info.xml'>this</a> XML-based format.
+					Uploaded course file should be in <a style="color:blue;" href='../model/course_info.xml'>this</a> XML-based format.
 				</div>
 				<div class='provider_command_options'>
 					<table>
+						
 						<tr>
-							<td>Title</td>
-							<td><input type=text name='addcourse_title' size="25"/></td>
-						</tr>
-						<tr>
-							<td>ID</td>
-							<td><input type='text' name='addcourse_id' size='25'/></td>							
-						</tr>
-						<tr>
-							<td>File</td>
-							<td><input type='file' name='addcourse_file'/></td>
+							<td>xml</td>
+							<textarea rows="4" cols="50" style="width:300px;height:200px;" name="xml"></textarea>
 						</tr>
 						<tr>
 							<td colspan=2 align='center'>
@@ -53,6 +47,7 @@
 					</table>
 				</div>								
 			</div>
+			
 			<div class='provider_command'>
 				<span class='provider_command_title'>Delete: <b>Courses</b></span>
 				<div class='provider_command_options'>
@@ -71,35 +66,43 @@
 			</div>
 			<br/>
 			<br/>
+			</form>
 			<div class='provider_command'>
 				<div class='provider_command_details'>
 					<span class='provider_command_title'>Add: <b>Materials</b></span><br/>
-					Uploaded material file should be in <a href='../model/material_info.xml'>this</a> XML-based format.
+					Uploaded material file should be in pdf format.
 				</div>
-				<div class='provider_command_options'>
-					<table>
-						<tr>
-							<td>Title</td>
-							<td><input type=text name='addmaterial_title' size="25"/></td>
-						</tr>
-						<tr>
-							<td>ID</td>
-							<td><input type='text' name='addmaterial_id' size='25'/></td>							
-						</tr>
-						<tr>
-							<td>File</td>
-							<td><input type='file' name='addmaterial_file'/></td>
-						</tr>
-						<tr>
-							<td colspan=2 align='center'>
-								<input type='submit' name='c_provider_addmaterial' value='Add material'/>
-							</td>
-						</tr>						
-					</table>
-				</div>		
+				<FORM action="http://localhost:8080/COMP9323-MOOCIndexSearchServices/materials/add?APIkey=<?=$_SESSION['apikey']?>"
+				       enctype="multipart/form-data"
+				       method="POST">
+				
+					<div class='provider_command_options'>
+						<table>
+							<tr>
+								<td>Title</td>
+								<td><input type=text name='title' size="25"/></td>
+							</tr>
+							<tr>
+								<td>course id</td>
+								<td><input type='text' name='cid' size='25'/></td>							
+							</tr>
+							<tr>
+								<td>File</td>
+								<td><input type='file' name='file'/></td>
+							</tr>
+							<tr>
+								<td colspan=2 align='center'>
+									<input type='submit' />
+								</td>
+							</tr>						
+						</table>
+					</div>
+				</FORM>
+						
 			</div>
+			<form method='POST' action='../controller/control.php'>
 			<div class='provider_command'>
-				<span class='provider_command_title'>Delete: <b>Courses</b></span>
+				<span class='provider_command_title'>Delete: <b>material</b></span>
 				<div class='provider_command_options'>
 					<table>
 						<tr>
