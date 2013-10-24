@@ -1,0 +1,13 @@
+@CHARSET "UTF-8";
+
+#provider_title
+{
+	font-size: 22pt;	
+}
+
+#provider_description
+{
+	font-size:13pt;
+	color: black;
+}
+

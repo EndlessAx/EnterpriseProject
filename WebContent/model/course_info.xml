@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- This is an example of a course XML file -->
 <course>
-   <description>This course covers the essential information that every serious programmer needs to know about algorithms and data structures, with emphasis on applications and scientific performance analysis of Java implementations. Part I covers basic iterable data types, sorting, and searching algorithms.</description>
-   <duration>6 weeks long</duration>
-   <ID>1001</ID>
-   <logoURI>https://s3.amazonaws.com/coursera/topics/algs4partI/large-icon.png</logoURI>
-   <name>Algorithms, Part I</name>
-   <provider>Coursera</provider>
-   <university>Princeton University</university>
-   <videoURI>https://www.youtube.com/embed/gZV5jVF8lJ8?rel=0</videoURI>
-   <website>https://www.coursera.org/course/algs4partI</website>
+	<description>This course covers the essential information that every serious programmer needs to know about algorithms and data structures, with emphasis on applications and scientific performance analysis of Java implementations. Part I covers basic iterable data types, sorting, and searching algorithms.</description>
+	<duration>6 weeks long</duration>
+	<instructors>Kevin Wayne</instructors>
+	<instructors>Robert Sedgewick</instructors>
+	<logoURI>https://s3.amazonaws.com/coursera/topics/algs4partI/large-icon.png</logoURI>
+	<name>Algorithms, Part I</name>
+	<provider>Coursera</provider>
+	<startDate>23-Aug-2013</startDate>
+	<university>Princeton University</university>
+	<videoURI>https://www.youtube.com/embed/gZV5jVF8lJ8?rel=0</videoURI>
+	<website>https://www.coursera.org/course/algs4partI</website>
 </course>

@@ -33,12 +33,22 @@
 				<input type="radio" name="query_type" value="material_list">Materials
 				<br/>																  		
 			<p/>				
-			
 			<br/>
+			<?php if (isset($_SESSION['user_name'])) {?>
+				Welcome back, <b><?= $_SESSION['user_name'] ?></b><br/>
+				<input type='submit' class='button_link' name='c_home_profile' value='View profile'/>
+				<input type='submit' class='button_link' name='c_home_logout' value='Log out'/>
+			<?php } else { ?>
 			Alternatively, 
 			<a href='../controller/control.php?c_header_login=1'>login</a> or 
-			<a href='../controller/control.php?c_header_register=1'>register</a></font>
-	</div>
+			<a href='../controller/control.php?c_header_register=1'>register</a><br/>
+			Interested in providing your courses for all to perceive? Click 
+			<a href='../view/provider_login.html'>here</a><br/>
+			Interested in having more users perceive your ads? Click 
+			<a href='../view/advertiser_login.html'>here</a><br/>
+			<?php } ?>
+		</div>
+	<div id='page_end'></div>
 </form>
 </body>
 </html>
