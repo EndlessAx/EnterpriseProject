@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
    id	    INTEGER AUTO_INCREMENT NOT NULL,
-   username    CHAR(20) NOT NULL,
+   name    CHAR(20) NOT NULL,
    password    CHAR(40) NOT NULL,
    email       CHAR(40) NOT NULL CHECK (email LIKE '%@%.%'),
    PRIMARY KEY (id)
@@ -18,6 +18,7 @@ DROP TABLE IF EXISTS user_interests;
 CREATE TABLE user_interests (
    user_id     INTEGER NOT NULL,
    course_id   INTEGER NOT NULL,
+   course_name TEXT NOT NULL,
    PRIMARY KEY (user_id,course_id)
 );
 
@@ -25,6 +26,7 @@ DROP TABLE IF EXISTS user_completions;
 CREATE TABLE user_completions (
    user_id     INTEGER NOT NULL,
    course_id   INTEGER NOT NULL,
+   course_name TEXT NOT NULL,
    completed   DATETIME,
    PRIMARY KEY (user_id,course_id)
 );
@@ -38,11 +40,11 @@ CREATE TABLE user_reviews (
 );
 
 DROP TABLE IF EXISTS user_log;
-CREATE TABLE user_log ( 
-   user_id     INTEGER NOT NULL,
+CREATE TABLE user_log (
    recorded    DATETIME,
-   action      ENUM( 'created','search','completed', 'view_course',
-		     'view_material', 'interest','review','rate'),
+   user_id     INTEGER NOT NULL,   
+   action      ENUM( 'created','search', 'view_course','view_material',
+		     'completed','interest','review','rate'),
    search_text TEXT,
    course_id   INTEGER,
    material_id INTEGER
