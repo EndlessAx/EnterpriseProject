@@ -6,11 +6,6 @@
 //Provides classes for storing response data
 require('classes.php');
 
-define('QUERY_COURSE_LIST','course_list');
-define('QUERY_COURSE_INFO','course_info');
-define('QUERY_MATERIAL_LIST','material_list');
-define('QUERY_MATERIAL_INFO','material_info');
-
 function Search_ExecuteQuery($identifier, $query_type, $num_results)
 {		
 	$xmlResponse = '';
@@ -31,27 +26,51 @@ function Search_ExecuteQuery($identifier, $query_type, $num_results)
 	//Display result of query		
 	switch ($query_type)
 	{
-		case QUERY_COURSE_LIST:
+		case QueryType::CourseList:
 			$items = $result;
+			$user_interests = getUserInterests();
 			include('../view/search_results.html');
 			break;
-		case QUERY_COURSE_INFO:
+		case QueryType::CourseInfo:
 			$course = $result;
+			$user_interests = getUserInterests();
+			$user_completions = getUserCompletions();			
 			include('../view/course_view.html');
 			break;
-		case QUERY_MATERIAL_LIST:
+		case QueryType::MaterialList:
 			$items = $result;
 			include('../view/search_results.html');
 			break;
-		case QUERY_MATERIAL_INFO:
-			$material = $result;
-			//include('../view/course_view.html');
-			//header('Location: '.$material->path);			
+		case QueryType::MaterialInfo:
+			$material = $result;			
 			header('Location: '.$result->viewLink);
-			break;
-			
+			break;			
 	}
 	 	
+}
+
+function Search_GetCourseName($course_id)
+{
+	$xmlResponse = '';	
+	$identifier = $course_id;
+	$query_type = QueryType::CourseInfo;
+	
+	
+	if (!$xmlResponse = sendServiceRequest($identifier, $query_type, null)) {
+		Control_DisplayErrorMessage("sendServiceRequest failed.");
+		return false;
+	}
+	
+	//Get results of query. Either list or info (courses and materials)
+	if (!$result = parseServiceResponse($xmlResponse, $query_type))
+	{
+		Control_DisplayErrorMessage("parseServiceResponse failed");
+		return false;
+	}
+	
+	$course = $result;
+	return $course->name;
+	
 }
 
 //Creates/sends a HTTP request with the search string
@@ -65,43 +84,43 @@ function sendServiceRequest($identifier, $query_type, $num_results)
 	//Get XML response from URL required
 	switch ($query_type)
 	{				
-		case QUERY_COURSE_LIST:
-			$query_URL = "http://localhost:8080/COMP9323-MOOCIndexSearchServices/courses/gsearch?";
+		
+		
+		case QueryType::CourseList:
+			$query_URL = "http://attr192.srvr.cse.unsw.edu.au/COMP9323-MOOCIndexSearchServices/courses/gsearch?";
 			$query_string = http_build_query(array('q' => $identifier, 'num' => $num_results));
 			//remove when finished debugging
-			//$xmlResponse = file_get_contents("../model/course_list.xml");
+			$xmlResponse = file_get_contents("../model/course_list.xml");
 			break;
-		case QUERY_COURSE_INFO:
-			$query_URL = "http://localhost:8080/COMP9323-MOOCIndexSearchServices/courses/";
+		case QueryType::CourseInfo:
+			$query_URL = "http://attr192.srvr.cse.unsw.edu.au/COMP9323-MOOCIndexSearchServices/courses/";			
 			$query_string = $identifier;	
 			//remove when finished debugging		
-			//$xmlResponse = file_get_contents("../model/course_info.xml");
+			$xmlResponse = file_get_contents("../model/course_info.xml");
 			break;
-		case QUERY_MATERIAL_LIST:			
-			$query_URL = "http://localhost:8080/COMP9323-MOOCIndexSearchServices/materials/search?";
+		case QueryType::MaterialList:
+			$query_URL = "http://attr192.srvr.cse.unsw.edu.au/COMP9323-MOOCIndexSearchServices/materials/search?";			
 			$query_string = http_build_query(array('q' => $identifier, 'num' => $num_results));
 			//remove when finished debugging
-			//$xmlResponse = file_get_contents("../model/material_list.xml");			
+			$xmlResponse = file_get_contents("../model/material_list.xml");			
 			break;
-		case QUERY_MATERIAL_INFO:
-			$query_URL = "http://localhost:8080/COMP9323-MOOCIndexSearchServices/materials/";
+		case QueryType::MaterialInfo:
+			$query_URL = "http://attr192.srvr.cse.unsw.edu.au/COMP9323-MOOCIndexSearchServices/materials/";
 			$query_string = $identifier;		
 			//remove when finished debugging
-			//$xmlResponse = file_get_contents("../model/material_info.xml");
+			$xmlResponse = file_get_contents("../model/material_info.xml");
 			break;
 	}
 	
 	
 	$opts = array('http' => array('method'  => 'GET'));	
 	$context  = stream_context_create($opts);
-	$xmlResponse = file_get_contents($query_URL.$query_string, false, $context);	
+	$xmlResponse = file_get_contents($query_URL.$query_string, false, $context);
+		
 	
 	if (!$xmlResponse)
 	{
 		$GLOBALS['exception'] = "Failed to receive courses from CDE module.";
-		//$GLOBALS['exception'] = $query_URL.$query_string;
-		//$GLOBALS['exception'] = file_get_contents($query_URL.$querystring, false, $context);
-		//$GLOBALS['exception'] = "what";
 		return false;
 	}	
 	
@@ -119,16 +138,16 @@ function parseServiceResponse($xmlstring, $query_type) {
 	//Process XML here for courses	
 	switch ($query_type)
 	{
-		case QUERY_COURSE_LIST:
+		case QueryType::CourseList:
 			$items = getXML_Course_List($xml_elements);
 			break;
-		case QUERY_COURSE_INFO:
+		case QueryType::CourseInfo:
 			$items = getXML_Course_Info($xml_elements);
 			break;
-		case QUERY_MATERIAL_LIST:
+		case QueryType::MaterialList:
 			$items = getXML_Material_List($xml_elements);
 			break;			
-		case QUERY_MATERIAL_INFO:
+		case QueryType::MaterialInfo:
 			$items = getXML_Material_Info($xml_elements);
 			break;
 	}	
@@ -208,6 +227,30 @@ function getXML_Material_Info($material_elements)
 	$newMaterial->viewLink = $material_elements->viewLink;	
 
 	return $newMaterial;
+}
+
+function getUserInterests()
+{
+	$user_interests = array();
+	if (Control_GetLoginStatus())
+	{
+		$user_interest_courses = DAO_GetUserInterestsByName(Control_GetUserName());
+		foreach ($user_interest_courses as $course)
+			$user_interests[] = $course->ID;
+	}
+	return $user_interests;
+}
+
+function getUserCompletions()
+{
+	$user_completions = array();
+	if (Control_GetLoginStatus())
+	{
+		$user_completed_courses = DAO_GetUserCompletionsByName(Control_GetUserName());
+		foreach ($user_completed_courses as $course)
+			$user_completions[] = $course->ID;
+	}
+	return $user_completions;
 }
 
 

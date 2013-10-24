@@ -19,17 +19,21 @@
 		</span><br/><br/>		
 		
 		<!-- Display login error if exists --> 
-		<?php if (isset($login_error) && !$login_error) { ?>				
-			<b class='color_red' >Invalid email/password</b>				
+		<?php if (isset($login_error)) { ?>				
+			<b class='color_red' >Invalid email/password combination</b>				
+		<?php } else if (isset($register_error)) { ?>
+			<span class='color_black' >You must be registered and logged into Perception to <br/>
+				<b>show interest</b> or <b>complete courses.</b><br/>
+				Register with <b>Perception</b> today (if you haven't done so already!)</span>
 		<?php } ?>
-						 
+								
 		<table id="login_table">	
 			<tr>
-				<td align="right">Email:</td>
+				<td align="right"><b>Email:</b></td>
 				<td><input type="text" name='user_email'/></td>
 			</tr>
 			<tr>
-				<td align="right">Password:</td>
+				<td align="right"><b>Password:</b></td>
 				<td><input type="password" name='user_password'/></td>
 			</tr>		
 			<tr>

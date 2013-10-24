@@ -17,6 +17,7 @@ function CMS_AddCourse($apikey, $xml)
 	
 	$context  = stream_context_create($opts);
 	
+	//http://attr192.srvr.cse.unsw.edu.au/COMP9323-MOOCIndexSearchServices/
 	if ($id = file_get_contents("http://localhost:8080/COMP9323-MOOCIndexSearchServices/courses/add?APIkey=". $apikey, false, $context)) {	
 		$provider_message =  'Added course: <a href="http://comp4920.com/perception/WebContent/controller/control.php?query_type=course_info&c_results_info_'.$id.'=View+course">'.$id .'</a>';
 		include('../view/provider_profile.html');
@@ -60,5 +61,12 @@ function CMS_DeleteMaterial($apikey, $id)
 		include('../view/provider_profile.html');
 	}
 }
+
+function CMS_DownloadUserLogs()
+{	
+	$user_log = DAO_GetUserLogs();
+	include('../view/user_log.html');
+}
+
 
 ?>

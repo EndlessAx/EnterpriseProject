@@ -5,12 +5,16 @@
 	<meta charset="UTF-8">
 	<title>Perception</title>
 	<link rel="stylesheet" type="text/css" href="../view/css/main.css">
-	<link rel="stylesheet" type="text/css" href="../view/css/search_results2.css">
+	<link rel="stylesheet" type="text/css" href="../view/css/search_results.css">
 </head>
 
 <body>
 <?php include('top.html');?>
 <form method="get" action="../controller/control.php">
+	<input type='hidden' name='saved_search_text' value='<?= $identifier ?>'>
+	<input type='hidden' name='saved_query_type' value='<?= $query_type ?>'>
+	<input type='hidden' name='saved_query_num' value='<?= $num_results ?>'>
+	
 	<div class="results_main_box">		
 		<p id="results_title">
 			<?= count($items) ?>
@@ -18,7 +22,7 @@
 			"<font color=blue><i><?= $identifier ?></i></font>"			
 		</p>
 		
-		<?php if ($query_type === QUERY_COURSE_LIST) { ?>
+		<?php if ($query_type === QueryType::CourseList) { ?>
 			<input type='hidden' name='query_type' value='course_info' />
 			<?php foreach ($items as $item) { ?>						
 				<div id="results_course_box">						
@@ -30,28 +34,35 @@
 						<?= $item->university ?>
 					</span>					
 					<div id="results_course_options">
-						<input 	name='c_results_info_<?= $item->ID ?>'
+						<input 	name='c_results_courseinfo_<?= $item->ID ?>'
 								class="button_link" 
 								type="submit"							 
-								value="View course"/>											
-						<input 	name='c_results_interest_<?= $item->ID ?>'
-								class="button_link" 
-								type="submit"							
-								value="Show interest"/>
+								value="View course"/>
+						<?php if (in_array($item->ID, $user_interests)) { ?>
+							<input 	name='c_results_removeinterest_<?= $item->ID ?>'
+									class="button_link" 
+									type="submit"							
+									value="(Remove interest)"/>
+						<?php } else {?>			
+							<input 	name='c_results_showinterest_<?= $item->ID ?>'
+									class="button_link" 
+									type="submit"							
+									value="Show interest"/>
+						<?php } ?>
 					</div>																			 				
 				</div>
 				<br/>			
 			<?php } ?>
 		<?php } ?>
 		
-		<?php if ($query_type === QUERY_MATERIAL_LIST) { ?>
+		<?php if ($query_type === QueryType::MaterialList) { ?>
 			<input type='hidden' name='query_type' value='material_info' />
 			<?php foreach ($items as $item) { ?>						
 				<div id="results_course_box">						
 					<span id='item_name' class="color_alt"><?= $item->title ?></span><br/>
 					<span id='item_subname'><?= $item->courseName?></span>
 					<div id="results_course_options">
-						<input 	name='c_results_info_<?= $item->ID?>'
+						<input 	name='c_results_materialinfo_<?= $item->ID?>'
 								class="button_link" 
 								type="submit"							 
 								value="View material"/>				

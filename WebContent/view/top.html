@@ -11,9 +11,10 @@
 <input class="search" type="text" name="search_text" value="Search course..." onfocus="if(this.value == 'Search course...'){this.value = '';}" onblur="if(this.value == ''){this.value='Search course...';}">
 <input class="searchb" type="image" src="../view/image/search.png" alt="Submit" width="20" height="20" name='c_home_search' value="Search">
 <input type="hidden" name="query_num" value="100">
+<input type="hidden" name="query_type" value="course_list">
 </form></li>
 <form style="float:right" method="POST" action='../controller/control.php'>
-<?php if (isset($_SESSION['user_name'])) { ?>
+<?php if (Control_GetLoginStatus()) { ?>
 	Logged in as <b><?= $_SESSION['user_name']?>.</b>&nbsp;&nbsp;&nbsp;			
 	<input type='submit' class='button_link' name='c_header_profile' value='Profile'/>
 	<input type='submit' class='button_link' name='c_header_logout' value='Logout'/>

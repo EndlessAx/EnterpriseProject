@@ -1,19 +1,7 @@
 <?php
-//User module
+//User module.
 
 require('../model/user_module_DAO.php');
-
-	/*
- * function RegisterUserNormal($name, $email, $password, $confirmpassword)
- * function CheckLoginStatus($cookies)
- * function DeleteUser($user_id)
- * function ValidateLogin($email, $password)
- * function setLoginCookie($name, $email, $password)
- * function unsetLoginCookie($email, $password)
- * function CheckLoginStatus($cookies) 
- * 
- */
-
 
 function User_RegisterNormal($name, $email, $password, $confirmpassword) 
 {	
@@ -35,42 +23,43 @@ function User_RegisterNormal($name, $email, $password, $confirmpassword)
 	if (strlen($input_errors) > 0)		
 	{			
 		include('../view/register.html');
-		return;
+		return false;
 	}
 			
 	if ($result = DAO_GetUserByName($name))
 	{		
 		$input_errors = "A user with the name '$result->name' already exists";		
 		include('../view/register.html');
-		return;
+		return false;
 	} else if (strlen($GLOBALS['exception']) > 0)
 	{
 		Control_DisplayErrorMessage("Query failed: GetUserByName");
-		return;
+		return false;
 	}
 	
 	if ($result = DAO_GetUserByEmail($email))
 	{
 		$input_errors = "A user with the email '$result->email' already exists";
 		include('../view/register.html');
-		return;
+		return false;
 	} else if (strlen($GLOBALS['exception']) > 0)
 	{
 		Control_DisplayErrorMessage("Query failed: GetUserByName");
-		return;
+		return false;
 	}
 		
 	
 	if (!DAO_AddUser($name, $email, $password))
 	{				
 		Control_DisplayErrorMessage("Query failed: AddUser");
-		return;
+		return false;
 	}
-	
+		
 	//User added.
 	setLoginSession($name);	
+	
 	include('../view/home.html');
-	return;			
+	return true;
 }
 
 
@@ -79,41 +68,108 @@ function User_RegisterFacebook()
 	
 }
 
-function DeleteUser($user_id) 
-{
-	if (!DAO_DeleteUser($user_id)) 
-	{
-		Control_DisplayErrorMessage("Unable to delete user: ".$user_id);
-	} else
-	{
-		//Set cookie "logged out"
-		//include('../view/search.html');		
-	}	
-	return;
-} 
+function User_AddInterestToUser($user_name, $course_id, $course_name)
+{		
+	$user = DAO_GetUserByName($user_name);
+	$result = DAO_AddInterestToUser($user->id, $course_id, $course_name);
 
-function GetUserByEmail($email)
+	if (!$result)
+	{	
+		Control_DisplayErrorMessage("Unable to add interest to user.");
+		return false;
+	}
+	else
+	{
+		return true;
+	}	
+}
+
+function User_RemoveInterestFromUser($user_name, $course_id)
 {
+	$user = DAO_GetUserByName($user_name);
+	$result = DAO_RemoveInterestFromUser($user->id, $course_id);
 	
+	if (!$result)
+	{	
+		Control_DisplayErrorMessage("Unable to remove interest to user.");
+		return false;
+	}	
+	
+	return true;
+	
+}
+
+function User_GetUserInterests($user_name)
+{	
+	$result = DAO_GetUserInterestsByName($user_name);
+	
+	if (!$result)
+	{
+		Control_DisplayErrorMessage("Unable to get user interests");
+		return false;
+	}
+	
+	return $result;				
+}
+
+function User_AddCompletionToUser($user_name, $course_id, $course_name)
+{
+	$user = DAO_GetUserByName($user_name);
+	$result = DAO_AddCompletionToUser($user->id, $course_id, $course_name);
+
+	if (!$result)
+	{
+		Control_DisplayErrorMessage("Unable to add completion from user.");
+		return false;
+	}
+	else
+	{		
+		return true;
+	}
+}
+
+function User_RemoveCompletionFromUser($user_name, $course_id)
+{
+	$user = DAO_GetUserByName($user_name);
+	$result = DAO_RemoveCompletionFromUser($user->id, $course_id);
+
+	if (!$result)
+	{
+		Control_DisplayErrorMessage("Unable to remove completion from user.");
+		return false;
+	}
+		
+	return true;
+}
+
+function User_GetUserCompletions($user_name)
+{
+	$result = DAO_GetUserCompletionsByName($user_name);
+
+	if (!$result)
+	{
+		Control_DisplayErrorMessage("Unable to get user interests");
+		return false;
+	}
+
+	return $result;
 }
 
 function User_Login($email, $password)
 {		
-	$user = DAO_ValidateLogin($email, md5($password));
+	$user = DAO_GetUserByLogin($email, $password);
 	if ($user) {						
 		setLoginSession($user->name);
 		include('../view/home.html');
 		
-	} else if (!$GLOBALS['exception']) {
-							
+	} else if (!$GLOBALS['exception']) {					
 		$login_error = "Invalid email/password";
 		include('../view/login.html');
 		
 	} else {
 		Control_DisplayErrorMessage("Login failed.");
 		return false;
-	}
-				
+	}				
 }
 
 function User_Logout()
@@ -121,16 +177,6 @@ function User_Logout()
 	unsetLoginSession();
 	include('../view/home.html');
 }
-
-
-function User_LoginStatus($name, $password)
-{	
-	if (!DAO_UserIsValid_Name($name, $password))
-		return false;
-	else
-		return true;
-}
-
 
 function setLoginSession($name)
 {		
@@ -141,11 +187,49 @@ function setLoginSession($name)
 function unsetLoginSession()
 {
 	unset($_SESSION['user_name']);
+	return;	
+}
+
+function User_GetUserByName($user_name)
+{
+	return DAO_GetUserByName($user_name);
+}
+
+function User_LogUserAction($user_id, $action, $search_text, $course_id, $material_id)
+{
+	if (!DAO_AddUserTrackingData($user_id, $action, $search_text, $course_id, $material_id))
+	{
+		Control_DisplayErrorMessage("Log User Action failed");
+		return;
+	}	
+}
+
+function User_DisplayProfile($user_name)
+{
+	$user = DAO_GetUserByName($user_name);
+	$user_interests = DAO_GetUserInterestsByName($user_name);
+	$user_completions = DAO_GetUserCompletionsByName($user_name);	
+	include('../view/user_profile.html');
 	return;
-	/*
-	setcookie('user_name', '', time()-3600);	
-	setcookie('user_password', '', time()-3600);
-	*/	
+	
+	
+}
+
+function User_DeleteUser($user_name)
+{
+	$user = DAO_GetUserByName($user_name);
+	
+	if (DAO_DeleteUser($user->id))
+	{
+		unset($_SESSION['user_name']);
+		include('../view/home.html');
+	}
+	else	
+	{
+		Control_DisplayErrorMessage("Unable to delete user: ".$user_id);
+	}			
+		
+	return;
 }
 
 //Check if user is logged in via cookies.
